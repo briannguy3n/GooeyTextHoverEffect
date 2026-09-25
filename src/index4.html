@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Gooey Text Hover Effect | Demo 4 | Codrops</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="Codrops" />
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="https://use.typekit.net/dba6omz.css">
+	<link rel="stylesheet" type="text/css" href="css/base.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+	<script>
+	document.documentElement.className = "js";
+	var supportsCssVars = function() { var e, t = document.createElement("style"); return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e };
+	supportsCssVars() || alert("Please view this demo in a modern browser that supports CSS Variables.");
+	</script>
+</head>
+
+<body class="demo-4 loading">
+	<main>
+		<h1 class="title">Gooey Text Hover Effect</h1>
+		<div class="text text--menu">&mdash; Logo</div>
+		<a class="text text--subscribe" href="http://eepurl.com/dJBUCo">Subscribe</a>
+		<div class="links">
+			<a href="https://tympanus.net/codrops/?p=49166">Article</a>
+			<a href="https://github.com/codrops/GooeyTextHoverEffect">GitHub</a>
+		</div>
+		<div class="demos">
+			<a href="index.html" class="demo">01</a>
+			<a href="index2.html" class="demo">02</a>
+			<a href="index3.html" class="demo">03</a>
+			<a href="index4.html" class="demo demo--current">04</a>
+		</div>
+		<p class="credits">Inspired and based on this <a href="https://codepen.io/gpyne/pen/ryPQoZ">demo</a></p>
+		<div class="logo">
+			<svg class="logo__svg" viewBox="0 372 1036 292" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<defs>
+					<!-- The source screenshot has a checkerboard baked into its pixels, so only the black bar is kept -->
+					<clipPath id="logo-bar">
+						<rect x="0" y="372" width="1036" height="292"></rect>
+					</clipPath>
+					<!-- Wide region so the drifting region noise never runs out of pixels at the edges -->
+					<filter id="goo-logo" x="-30%" y="-25%" width="160%" height="150%">
+						<!-- White letters become opaque and the black bar becomes transparent, so the goo acts on the letters only -->
+						<feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="mask"></feColorMatrix>
+						<feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="3" result="noise"></feTurbulence>
+						<feDisplacementMap in="mask" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" result="warped"></feDisplacementMap>
+						<feGaussianBlur class="blur-light" in="warped" stdDeviation="2" result="blurLight"></feGaussianBlur>
+						<feGaussianBlur class="blur-heavy" in="warped" stdDeviation="11" result="blurHeavy"></feGaussianBlur>
+						<!-- Large, slow noise blobs pick where the heavy blur applies, so only some areas melt together -->
+						<feTurbulence type="fractalNoise" baseFrequency="0.0045" numOctaves="1" seed="11" result="regionNoise"></feTurbulence>
+						<feOffset class="region-drift" in="regionNoise" dx="0" dy="0" result="regionDrift"></feOffset>
+						<feColorMatrix class="region-contrast" in="regionDrift" type="matrix" values="0 0 0 0 0
+																									0 0 0 0 0
+																									0 0 0 0 0
+																									7 0 0 0 -3.3" result="regions"></feColorMatrix>
+						<feComposite in="blurHeavy" in2="regions" operator="in" result="heavyPart"></feComposite>
+						<feComposite in="blurLight" in2="regions" operator="out" result="lightPart"></feComposite>
+						<!-- Mix both blurs before the threshold so melted and crisp areas blend without a seam -->
+						<feComposite in="heavyPart" in2="lightPart" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="blur"></feComposite>
+						<feColorMatrix in="blur" mode="matrix" values="0 0 0 0 1
+																		0 0 0 0 1
+																		0 0 0 0 1
+																		0 0 0 18 -7" result="goo"></feColorMatrix>
+					</filter>
+				</defs>
+				<g filter="url(#goo-logo)">
+					<image xlink:href="img/nothing.png" width="1036" height="1036" clip-path="url(#logo-bar)"></image>
+				</g>
+			</svg>
+		</div>
+	</main>
+	<script src="js/demo4/index.js"></script>
+</body>
+
+</html>

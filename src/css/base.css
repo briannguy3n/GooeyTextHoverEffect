@@ -45,6 +45,13 @@ body {
 	--fontsize-menu: 18px;
 }
 
+.demo-4 {
+	--color-text: #fff;
+	--color-bg: #000;
+	--color-link: #ddd;
+	--color-link-hover: #fff;
+}
+
 /* Page Loader */
 .js .loading::before,
 .js .loading::after {
@@ -163,6 +170,18 @@ main {
     pointer-events: none;
 }
 
+.logo {
+	width: 100%;
+	align-self: center;
+	cursor: pointer;
+}
+
+.logo__svg {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
 .menu__text text {
 	transform-origin: 50% 50%;
 	transform-box: view-box;
@@ -224,7 +243,8 @@ main {
 		grid-area: text-subscribe;
 		justify-self: end;
 	}
-	.menu {
+	.menu,
+	.logo {
 		grid-area: menu;
 	}
 }
