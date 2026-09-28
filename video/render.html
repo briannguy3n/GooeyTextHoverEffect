@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>nothing logo loop</title>
+	<style>
+		html, body { margin: 0; width: 100%; height: 100%; background: transparent; overflow: hidden; }
+		body.preview { background: #000; }
+		svg { display: block; width: 100vw; height: 100vh; }
+	</style>
+</head>
+
+<body>
+	<!-- The logo image is drawn 1036 units wide so the filter values stay on the same scale as demo 4 -->
+	<svg viewBox="-201.5 -273.92 1439 809.44" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<defs>
+			<filter id="goo" filterUnits="userSpaceOnUse" x="-201.5" y="-273.92" width="1439" height="809.44">
+				<feTurbulence class="noise" type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="3" result="noise"></feTurbulence>
+				<feDisplacementMap in="SourceAlpha" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G" result="warped"></feDisplacementMap>
+
+				<feGaussianBlur in="warped" stdDeviation="2" result="blurLight"></feGaussianBlur>
+				<feGaussianBlur class="blur-heavy" in="warped" stdDeviation="15" result="blurHeavy"></feGaussianBlur>
+
+				<feTurbulence type="fractalNoise" baseFrequency="0.0045" numOctaves="1" seed="11" result="regionNoise"></feTurbulence>
+				<feOffset class="region-drift" in="regionNoise" dx="0" dy="0" result="regionDrift"></feOffset>
+				<feColorMatrix in="regionDrift" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  7 0 0 0 -3" result="regions"></feColorMatrix>
+
+				<feComposite in="blurHeavy" in2="regions" operator="in" result="heavyPart"></feComposite>
+				<feComposite in="blurLight" in2="regions" operator="out" result="lightPart"></feComposite>
+				<feComposite in="heavyPart" in2="lightPart" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="blur"></feComposite>
+				<feColorMatrix in="blur" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 18 -7" result="goo"></feColorMatrix>
+			</filter>
+		</defs>
+		<g filter="url(#goo)">
+			<image href="logo.png" width="1036" height="261.59"></image>
+		</g>
+	</svg>
+	<script src="motion.js"></script>
+</body>
+
+</html>
